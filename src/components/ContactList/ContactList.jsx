@@ -7,10 +7,10 @@ function ContactList(props) {
 
   return (
     <ul>
-      {contacts.map(({ name, number, id }) => (
+      {contacts.map(({ name, phone, id }) => (
         <li className={s.item} key={id}>
           <p>
-            {name}: {number}
+            {name}: {phone}
           </p>
           <button
             className={s.button}
@@ -29,7 +29,7 @@ ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
+      phone: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
     })
   ),

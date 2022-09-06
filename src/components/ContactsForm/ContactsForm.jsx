@@ -7,7 +7,7 @@ const ContactsForm = ({ catchSubmitInfo }) => {
   //   name: '',
   //   number: '',
   // };
-  const [contact, setContact] = useState({ name: '', number: '' });
+  const [contact, setContact] = useState({ name: '', phone: '' });
 
   const onHandleChange = event => {
     const { name, value } = event.target;
@@ -15,12 +15,12 @@ const ContactsForm = ({ catchSubmitInfo }) => {
   };
 
   const reset = () => {
-    setContact({ name: '', number: '' });
+    setContact({ name: '', phone: '' });
   };
 
   const onSubmit = event => {
     event.preventDefault();
-    catchSubmitInfo(contact);
+    catchSubmitInfo({ ...contact });
     reset();
   };
 
@@ -44,8 +44,8 @@ const ContactsForm = ({ catchSubmitInfo }) => {
         <input
           className={s.inputNumber}
           type="tel"
-          name="number"
-          value={contact.number}
+          name="phone"
+          value={contact.phone}
           onChange={onHandleChange}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"

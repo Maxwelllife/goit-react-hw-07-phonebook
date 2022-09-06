@@ -8,7 +8,7 @@ export const fetchContacts = () => {
     dispatch(actions.fetchContactsRequest());
     try {
       const data = await api.getContacts();
-      console.log('dataOperations: ', data);
+
       dispatch(actions.fetchContactsSuccess(data));
     } catch (error) {
       dispatch(actions.fetchContactsError(error));
@@ -17,12 +17,23 @@ export const fetchContacts = () => {
   return func;
 };
 
-export const addContact = data => {
-  const func = async dispatch => {
-    dispatch(actions.addContactRequest());
+export const addContact = result => {
+  const func = async (dispatch, getState) => {
+    const { phonebook } = getState();
+    const isDublicate = phonebook.contacts.find(
+      contact => contact.name.toLowerCase() === result.name.toLowerCase()
+    );
+    if (isDublicate) {
+      alert(`${result.name} is already in contacts`);
+      return;
+    } else if (result.name === '') {
+      alert('Please enter your name');
+      return;
+    }
+    dispatch(actions.fetchContactsRequest());
     try {
-      const result = await api.addContact(data);
-      dispatch(actions.addContactSuccess(result));
+      const data = await api.addContact(result);
+      dispatch(actions.addContactSuccess(data));
     } catch (error) {
       dispatch(actions.addContactError(error));
     }

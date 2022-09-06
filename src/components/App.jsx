@@ -10,11 +10,10 @@ import { fetchContacts, removeContact, addContact } from 'redux/operations';
 import { filterContact } from '../redux/actions.js';
 
 const App = () => {
-  const { contacts, filter, loading } = useSelector(state => {
-    console.log('state: ', state);
-    return state.phonebook;
+  const { contacts, filter, loading } = useSelector(store => {
+    return store.phonebook;
   });
-  // console.log('contacts: ', contacts);
+
   const filterValue = filter;
   const dispatch = useDispatch();
 
@@ -23,21 +22,9 @@ const App = () => {
   }, [dispatch]);
 
   const onAddContact = data => {
-    const action = addContact(data); // {type: "contact/add", payload: data }
-    const { name } = data;
-    if (
-      contacts.find(
-        contact => contact.name.toLowerCase() === name.toLowerCase()
-      )
-    ) {
-      alert(`${name} - this contact already in contact list`);
-      return;
-    } else if (name === '') {
-      alert('Please enter your name');
-      return;
-    }
+    console.log('dataAPP: ', data);
 
-    dispatch(action);
+    return dispatch(addContact(data));
   };
 
   const onRemoveContact = id => dispatch(removeContact(id));
@@ -45,6 +32,7 @@ const App = () => {
   const onfilterContact = e => dispatch(filterContact(e.target.value));
 
   const getVisibleContacts = () => {
+    console.log('contacts: ', contacts);
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filterValue)
     );
